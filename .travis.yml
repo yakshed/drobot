@@ -1,5 +1,7 @@
 language: ruby
 rvm:
   - 2.2.4
+script:
+  - echo "Building with phantomjs $(phantomjs --version)"
 sudo: false
 cache: bundler
