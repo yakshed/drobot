@@ -9,7 +9,7 @@ class SimpleApp < Sinatra::Base
   end
   
   post '/login' do
-    @authenticated = (@params[:username] == 'myuser' && @params[:password] == 'mypass')
+    @authenticated = (@params[:username] == 'my_user' && @params[:password] == 'soopa_secret')
     erb :simple_login
   end
   

@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "soopa_secret"
+echo "Username: my_user"

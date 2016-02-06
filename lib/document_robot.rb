@@ -1,10 +1,11 @@
 require 'open-uri'
 require 'capybara'
+
 class DocumentRobot
   include Capybara::DSL
   
-  def initialize(target = "/tmp/foo")
-    #puts "Initalized with #{target}"
+  def initialize(credential_provider, target = "/tmp/foo")
+    @credential_provider = credential_provider
     @target = target
   end
   
@@ -21,5 +22,13 @@ class DocumentRobot
   
   def prefix
     Date.today.strftime("%Y-%m-")
-  end  
+  end
+
+  def username
+    @credential_provider.username
+  end
+
+  def password
+    @credential_provider.password
+  end
 end

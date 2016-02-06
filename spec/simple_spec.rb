@@ -1,5 +1,8 @@
 require 'document_robot'
 require 'fileutils'
+
+require 'credentials/passwordstore_provider'
+
 require_relative 'fixtures/simple_app'
 require_relative 'fixtures/sample_robot'
   
@@ -7,12 +10,16 @@ require_relative 'fixtures/sample_robot'
 
 describe "A simple app", :type => :feature do
 
-  let(:dir) { dir = "#{File.dirname(__FILE__)}/fixtures/output" }
-  subject { SampleRobot.new(dir) }
+  let(:fixture_dir) { "#{File.dirname(__FILE__)}/fixtures" }
+  let(:output_dir) { "#{fixture_dir}/output" }
+
+  let(:credential_provider) { Credentials::PasswordstoreProvider.new(pass_command: "#{fixture_dir}/mock_pass",  pass_name: 'sample/app') }
+  
+  subject { SampleRobot.new(credential_provider, output_dir) }
 
   before :each do
     Capybara.app = SimpleApp.new
-    FileUtils.mkdir_p(dir)
+    FileUtils.mkdir_p(output_dir)
   end
 
   it "has a login" do
@@ -21,7 +28,7 @@ describe "A simple app", :type => :feature do
   end
   
   it "has downloadable files" do
-    files = proc { Dir["#{dir}/**"] }
+    files = proc { Dir["#{output_dir}/**"] }
     FileUtils.rm(files.call)
     
     expect(files.call).to eq []
@@ -29,7 +36,7 @@ describe "A simple app", :type => :feature do
     subject.run
 
     filename = Date.today.strftime("%Y-%m-sample.pdf")
-    expect(files.call).to eq [ File.join(dir, filename) ]
+    expect(files.call).to eq [ File.join(output_dir, filename) ]
   end
   
   #within("#session") do

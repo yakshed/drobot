@@ -5,8 +5,8 @@ class SampleRobot < DocumentRobot
     click_link 'login'
 
     within('#myform') do
-      fill_in 'username', :with => 'myuser'
-      fill_in 'password', :with => 'mypass'
+      fill_in 'username', :with => username
+      fill_in 'password', :with => password
       click_button 'Yo'
     end
     
