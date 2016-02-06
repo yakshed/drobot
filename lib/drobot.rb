@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'capybara'
 require 'version'
+require 'drobots'
 
 class Drobot
   include Capybara::DSL
@@ -18,7 +19,8 @@ class Drobot
   end
 
   def title
-    prefix + self.class.name.gsub("Robot", "").downcase
+    drobot_name = self.class.name.split("::").pop
+    prefix + drobot_name.downcase
   end
   
   def prefix

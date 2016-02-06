@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require './version'
+require './lib/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "drobot"
@@ -23,5 +23,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "awesome_print", "~> 1.6"
-  spec.add_development_dependency "sinatra", "~> 1.4.7"
+  spec.add_development_dependency "sinatra", "~> 1.4"
+  spec.add_development_dependency "xdg", "~> 2.1"
 end

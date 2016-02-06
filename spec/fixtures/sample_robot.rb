@@ -1,5 +1,4 @@
-class SampleDrobot < Drobot
-  
+class Drobots::Sample < Drobot
   def run
     visit "/"
     click_link 'login'

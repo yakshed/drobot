@@ -4,7 +4,7 @@ module Credentials
   class PasswordstoreProvider
     
     def initialize(pass_command: nil, pass_name:)
-      default_command = find_executable 'pass'
+      default_command = '/usr/bin/pass'
       @pass_command = pass_command || default_command
       @pass_name = pass_name
     end

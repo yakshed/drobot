@@ -1,4 +1,6 @@
 require 'sinatra'
+require 'tilt/erubis'
+
 class SimpleApp < Sinatra::Base
   get '/' do
     erb :simple_index

@@ -1,0 +1,8 @@
+---
+drobots:
+  Firstsample:
+    passwordstore:
+      name: 'first/sample'
+  Secondsample:
+    passwordstore:
+      name: 'second/sample'
