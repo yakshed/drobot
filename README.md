@@ -1,4 +1,5 @@
 # Drobots
+[![Build Status](https://travis-ci.org/yakshed/drobots.svg?branch=master)](https://travis-ci.org/yakshed/drobots)
 
 Helpful little Drobots.
 
