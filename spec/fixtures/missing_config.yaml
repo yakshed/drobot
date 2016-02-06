@@ -1,0 +1,8 @@
+---
+drobots:
+  NonExistingDrobot:
+    passwordstore:
+      name: 'nonexisting/sample'
+  Secondsample:
+    passwordstore:
+      name: 'second/sample'

@@ -10,26 +10,38 @@ require_relative 'fixtures/sample_robot'
 require_relative 'fixtures/drobots/firstsample'
 require_relative 'fixtures/drobots/secondsample'
 
-  
+
 describe "Drobot", :type => :app do
   let(:fixture_dir) { "#{File.dirname(__FILE__)}/fixtures" }
   let(:output_dir) { "#{fixture_dir}/output" }
 
   describe "runner" do
-    subject { Runner.new(config_file: File.join(fixture_dir, 'test_config.yaml')) }
+    context "with valid configuration" do
+      subject { Runner.new(config_file: File.join(fixture_dir, 'test_config.yaml')) }
 
-    it "iterates over multiple drobots" do
-      drobots = subject.drobots
-      expect(drobots.count).to eq 2
-      expect(drobots.first).to be_a(Drobots::Firstsample)
-      expect(drobots.last).to be_a(Drobots::Secondsample)
+      it "iterates over multiple drobots" do
+        drobots = subject.drobots
+        expect(drobots.count).to eq 2
+        expect(drobots.first).to be_a(Drobots::Firstsample)
+        expect(drobots.last).to be_a(Drobots::Secondsample)
+      end
+
+      it "runs Drobots" do
+        subject.run
+        
+        expect(subject.drobots.first.ran?).to be true
+        expect(subject.drobots.last.ran?).to be true
+      end
     end
+    context "with broken configurations" do
+      it "gives a proper warning" do
+        expect {
+          Runner.new(config_file: File.join(fixture_dir, 'broken_config.yaml'))
+        }.to raise_exception(JSON::Schema::ValidationError)
+      end
 
-    it "runs Drobots" do
-      subject.run
-      
-      expect(subject.drobots.first.ran?).to be true
-      expect(subject.drobots.last.ran?).to be true
+      it "detects non-existing Drobots" do
+      end
     end
   end
 

@@ -6,26 +6,37 @@ require 'credentials/passwordstore_provider'
 
 
 class Runner
-  
-  schema = {
+  SCHEMA = {
     "type" => "object",
-    "required" => ["a"],
+    "required" => ["drobots"],
     "properties" => {
-      "a" => {"type" => "integer"}
+      "drobots" => {
+        "type" => "object",
+        "patternProperties" => {
+          ".+" => {
+            "type"  => "object",
+            "properties" => {
+              "passwordstore" => {
+                "type" => "object",
+                "properties" => {
+                  "name" => {
+                    "type" => "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 
-  data = {
-    "a" => 5
-  }
-
-  JSON::Validator.validate(schema, data)
   def initialize(config_file: nil)
     default_file = File.join(Dir.home, '.drobots.yaml')
     @config_file = config_file || default_file
     @config = YAML.load_file(@config_file)
 
-    
+    JSON::Validator.validate!(SCHEMA, @config)
   end
 
   def drobots
