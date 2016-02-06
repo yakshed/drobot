@@ -1,0 +1,11 @@
+<% if @authenticated -%>
+<a href="/sample.pdf">Mega Secure Download</a>
+<% else %>
+<h1>Go away</h1>
+<% end %>
+<hr/>
+<form id="myform" action="/login" method="post">
+<input name="username" type="text" value=""/>
+<input name="password" type="text" value=""/>
+<input name="submit" type="submit" value="Yo" />
+</form>
