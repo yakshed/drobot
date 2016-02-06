@@ -1,7 +1,8 @@
 require 'open-uri'
 require 'capybara'
+require 'version'
 
-class DocumentRobot
+class Drobot
   include Capybara::DSL
   
   def initialize(credential_provider, target = "/tmp/foo")

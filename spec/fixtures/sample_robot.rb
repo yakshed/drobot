@@ -1,4 +1,4 @@
-class SampleRobot < DocumentRobot
+class SampleDrobot < Drobot
   
   def run
     visit "/"

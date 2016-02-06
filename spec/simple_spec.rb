@@ -1,4 +1,4 @@
-require 'document_robot'
+require 'drobot'
 require 'fileutils'
 
 require 'credentials/passwordstore_provider'
@@ -15,16 +15,11 @@ describe "A simple app", :type => :feature do
 
   let(:credential_provider) { Credentials::PasswordstoreProvider.new(pass_command: "#{fixture_dir}/mock_pass",  pass_name: 'sample/app') }
   
-  subject { SampleRobot.new(credential_provider, output_dir) }
+  subject { SampleDrobot.new(credential_provider, output_dir) }
 
-  before :each do
+  before do
     Capybara.app = SimpleApp.new
     FileUtils.mkdir_p(output_dir)
-  end
-
-  it "has a login" do
-    subject.run
-    #@robot.download(l[:href])
   end
   
   it "has downloadable files" do
@@ -35,20 +30,7 @@ describe "A simple app", :type => :feature do
     
     subject.run
 
-    filename = Date.today.strftime("%Y-%m-sample.pdf")
+    filename = Date.today.strftime("%Y-%m-sampledrobot.pdf")
     expect(files.call).to eq [ File.join(output_dir, filename) ]
   end
-  
-  #within("#session") do
-  #  fill_in 'Email', :with => 'user@example.com'
-  #  fill_in 'Password', :with => 'password'
-  #end
-
-  #l = find_link 'eins'
-  #puts l[:href]
-  #open('/tmp/out.pdf', 'wb') do |file|
-  #  file << open(l[:href]).read
-  #  puts ("Downloading...")
-  #end
-
 end
