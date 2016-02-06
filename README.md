@@ -1,5 +1,6 @@
-# Drobots
+# Drobot
 [![Build Status](https://travis-ci.org/yakshed/drobots.svg?branch=master)](https://travis-ci.org/yakshed/drobots)
+[![Gem Version](https://badge.fury.io/rb/drobot.svg)](https://badge.fury.io/rb/drobot)
 
 Helpful little Drobots.
 
