@@ -2,34 +2,8 @@ require 'yaml'
 require 'json-schema'
 require 'credentials/passwordstore_provider'
 
-
-
-
 class Runner
-  SCHEMA = {
-    "type" => "object",
-    "required" => ["drobots"],
-    "properties" => {
-      "drobots" => {
-        "type" => "object",
-        "patternProperties" => {
-          ".+" => {
-            "type"  => "object",
-            "properties" => {
-              "passwordstore" => {
-                "type" => "object",
-                "properties" => {
-                  "name" => {
-                    "type" => "string"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  SCHEMA = YAML.load_file(Drobot::BASEDIR.join('lib/runner_config_schema.yaml'))
 
   def initialize(config_file: nil)
     default_file = File.join(Dir.home, '.drobots.yaml')
@@ -42,11 +16,19 @@ class Runner
   def drobots
     @drobots ||= @config['drobots'].map do |name, config|
       credential_provider = Credentials::PasswordstoreProvider.new(pass_name: config['passwordstore']['name'])
-      Object.const_get("Drobots::#{name}").new(credential_provider)
+      determine_drobot(name).new(credential_provider)
     end
   end
 
   def run
     drobots.each(&:run)
+  end
+
+  private
+
+  def determine_drobot(name)
+    drobot = Object.const_get("Drobots::#{name}")
+  rescue NameError
+    raise "unknown Drobot #{name}"
   end
 end

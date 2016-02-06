@@ -5,6 +5,9 @@ require 'drobots'
 
 class Drobot
   include Capybara::DSL
+
+  # Optimized for Programmer Happyness
+  BASEDIR = Pathname.new(__dir__).parent
   
   def initialize(credential_provider, target = "/tmp/foo")
     @credential_provider = credential_provider

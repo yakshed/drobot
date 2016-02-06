@@ -6,11 +6,11 @@ require './lib/version'
 Gem::Specification.new do |spec|
   spec.name          = "drobot"
   spec.version       = Drobot::VERSION
-  spec.authors       = ["Sebastian Schulze"]
-  spec.email         = ["github.com@bascht.com"]
+  spec.authors       = ["Sebastian Schulze", "Lucas Dohmen"]
+  spec.email         = ["rubygems.org@bascht.com", "lucas@moonbeamlabs.com"]
   spec.summary       = "Clever little Robot that downloads your Documents"
   spec.description   = "Clever little Robot that downloads your Documents and can't be bothered to write a description."
-  spec.homepage      = ""
+  spec.homepage      = "http://www.yakshed.org"
   spec.license       = "GPL-3.0"
 
   spec.files         = `git ls-files -z`.split("\x0")

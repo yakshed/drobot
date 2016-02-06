@@ -6,14 +6,12 @@ require 'credentials/passwordstore_provider'
 
 require_relative 'fixtures/simple_app'
 require_relative 'fixtures/sample_robot'
-
 require_relative 'fixtures/drobots/firstsample'
 require_relative 'fixtures/drobots/secondsample'
 
-
 describe "Drobot", :type => :app do
-  let(:fixture_dir) { "#{File.dirname(__FILE__)}/fixtures" }
-  let(:output_dir) { "#{fixture_dir}/output" }
+  let(:fixture_dir) { Drobot::BASEDIR.join("spec/fixtures") }
+  let(:output_dir) { Drobot::BASEDIR.join("tmp") }
 
   describe "runner" do
     context "with valid configuration" do
@@ -41,6 +39,9 @@ describe "Drobot", :type => :app do
       end
 
       it "detects non-existing Drobots" do
+        expect {
+          Runner.new(config_file: File.join(fixture_dir, 'missing_config.yaml')).run
+        }.to raise_exception(RuntimeError, /unknown Drobot NonExistingDrobot/)
       end
     end
   end
