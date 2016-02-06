@@ -24,6 +24,13 @@ describe "Drobot", :type => :app do
       expect(drobots.first).to be_a(Drobots::Firstsample)
       expect(drobots.last).to be_a(Drobots::Secondsample)
     end
+
+    it "runs Drobots" do
+      subject.run
+      
+      expect(subject.drobots.first.ran?).to be true
+      expect(subject.drobots.last.ran?).to be true
+    end
   end
 
   describe "automated download", :type => :feature do

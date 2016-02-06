@@ -9,9 +9,13 @@ class Runner
   end
 
   def drobots
-    @config['drobots'].map do |name, config|
+    @drobots ||= @config['drobots'].map do |name, config|
       credential_provider = Credentials::PasswordstoreProvider.new(pass_name: config['passwordstore']['name'])
       Object.const_get("Drobots::#{name}").new(credential_provider)
     end
+  end
+
+  def run
+    drobots.each(&:run)
   end
 end
