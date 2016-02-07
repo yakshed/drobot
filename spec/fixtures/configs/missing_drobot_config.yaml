@@ -1,8 +1,10 @@
 ---
 drobots:
   NonExistingDrobot:
-    username: some
-    password: thing
+    credentials:
+      username: some
+      password: thing
   Secondsample:
-    username: else
-    password: so.
+    credentials:
+      username: else
+      password: so.

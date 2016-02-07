@@ -11,12 +11,8 @@ properties:
         properties:
           credentials:
             type: object
-            required: [ 'provider' ]
-            default:
-              provider: Static
+            required: [ 'type' ]
             properties:
-              provider:
+              type:
                 type: string
-                default: StaticProvider
-              params:
-                type: object
+                default: Static

@@ -1,5 +1,6 @@
 ---
 drobots:
   Notinheriting:
-    passwordstore:
+    credentials:
+      type: 'Passwordstore'
       name: 'nonexisting/sample'

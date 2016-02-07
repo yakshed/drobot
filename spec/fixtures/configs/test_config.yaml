@@ -1,11 +1,12 @@
 ---
 drobots:
   Firstsample:
-    username: 'static'
-    password: 'password'
+    credentials:
+      username: 'static'
+      password: 'password'
+    flupper: "fjasdlfjd"
   Secondsample:
     credentials:
-      provider: Passwordstore
-      params:
-        pass_command: 'spec/fixtures/mock_pass'
-        pass_name: 'second/sample'
+      type: Passwordstore
+      command: 'spec/fixtures/mock_pass'
+      name: 'second/sample'
