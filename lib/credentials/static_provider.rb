@@ -1,7 +1,6 @@
+require 'ostruct'
+
 module Credentials
-  class StaticProvider
-    def initialize(params={})
-      puts "Static Provider initialized with #{params}"
-    end
+  class StaticProvider < OpenStruct
   end
 end
