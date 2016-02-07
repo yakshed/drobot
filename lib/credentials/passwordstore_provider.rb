@@ -1,12 +1,10 @@
-require 'mkmf'
-
 module Credentials
   class PasswordstoreProvider
     
-    def initialize(pass_command: nil, pass_name:)
-      default_command = '/usr/bin/pass'
-      @pass_command = pass_command || default_command
-      @pass_name = pass_name
+    def initialize(opts)
+      
+      @pass_command = opts['pass_command'] || '/usr/bin/pass'
+      @pass_name = opts['pass_name'] or raise ArgumentError.new("Missing pass_name for Provider")
     end
     
     def username

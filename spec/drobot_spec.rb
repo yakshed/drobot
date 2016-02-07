@@ -2,7 +2,6 @@ require 'fileutils'
 require 'pp'
 require 'drobot'
 require 'runner'
-require 'credentials/passwordstore_provider'
 
 require_relative 'fixtures/simple_app'
 require_relative 'fixtures/sample_robot'
@@ -16,7 +15,7 @@ describe "Drobot", :type => :app do
 
   describe "runner" do
     context "with valid configuration" do
-      subject { Runner.new(config_file: File.join(fixture_dir, 'test_config.yaml')) }
+      subject { Runner.new(config_file: File.join(fixture_dir, 'configs/test_config.yaml')) }
 
       it "iterates over multiple drobots" do
         expect(subject.drobots.count).to eq 2
@@ -34,28 +33,35 @@ describe "Drobot", :type => :app do
     context "with broken configurations" do
       it "gives a proper warning" do
         expect {
-          Runner.new(config_file: File.join(fixture_dir, 'broken_config.yaml'))
+          Runner.new(config_file: File.join(fixture_dir, 'configs/broken_config.yaml'))
         }.to raise_exception(JSON::Schema::ValidationError)
       end
 
       it "detects non-existing Drobots" do
         expect {
-          Runner.new(config_file: File.join(fixture_dir, 'missing_config.yaml')).run
+          Runner.new(config_file: File.join(fixture_dir, 'configs/missing_drobot_config.yaml')).run
         }.to raise_exception(RuntimeError, /unknown Drobot NonExistingDrobot/)
+      end
+
+      it "detects non-existing Providers" do
+        expect {
+          Runner.new(config_file: File.join(fixture_dir, 'configs/missing_provider_config.yaml')).run
+        }.to raise_exception(RuntimeError, /unknown Provider Credentials::NonexistingProvider/)
       end
 
       it "detects Drobots not inheriting from Drobot" do
         expect {
-          Runner.new(config_file: File.join(fixture_dir, 'notinheriting_config.yaml')).run
+          Runner.new(config_file: File.join(fixture_dir, 'configs/notinheriting_config.yaml')).run
         }.to raise_exception(RuntimeError, /Notinheriting doesn't inherit from Drobot/)
       end
     end
+    
   end
 
   describe "automated download", :type => :feature do
 
     let(:runner) { Runner.new }
-    let(:credential_provider) { Credentials::PasswordstoreProvider.new(pass_command: "#{fixture_dir}/mock_pass",  pass_name: 'sample/app') }
+    let(:credential_provider) { Credentials::PasswordstoreProvider.new({'pass_command' => "#{fixture_dir}/mock_pass",  'pass_name' => 'sample/app'} ) }
     subject { Drobots::Sample.new(credential_provider, output_dir) }
 
     before do

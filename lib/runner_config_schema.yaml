@@ -9,8 +9,14 @@ properties:
       ".+":
         type: object
         properties:
-          passwordstore:
+          credentials:
             type: object
+            required: [ 'provider' ]
+            default:
+              provider: Static
             properties:
-              name:
+              provider:
                 type: string
+                default: StaticProvider
+              params:
+                type: object

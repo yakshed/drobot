@@ -1,0 +1,7 @@
+---
+drobots:
+  Firstsample:
+    credentials:
+      provider: Nonexisting
+      params:
+        name: 'nonexisting/sample'

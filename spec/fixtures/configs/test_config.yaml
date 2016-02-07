@@ -1,0 +1,11 @@
+---
+drobots:
+  Firstsample:
+    username: 'static'
+    password: 'password'
+  Secondsample:
+    credentials:
+      provider: Passwordstore
+      params:
+        pass_command: 'spec/fixtures/mock_pass'
+        pass_name: 'second/sample'

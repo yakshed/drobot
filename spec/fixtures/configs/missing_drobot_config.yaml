@@ -1,0 +1,8 @@
+---
+drobots:
+  NonExistingDrobot:
+    username: some
+    password: thing
+  Secondsample:
+    username: else
+    password: so.

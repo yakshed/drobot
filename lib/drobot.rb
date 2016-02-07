@@ -3,6 +3,9 @@ require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'pathname'
 
+require 'credentials/passwordstore_provider'
+require 'credentials/static_provider'
+
 Capybara.default_driver = :poltergeist
 
 class Drobot
