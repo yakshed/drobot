@@ -97,5 +97,3 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
-
-Capybara.default_driver = :poltergeist

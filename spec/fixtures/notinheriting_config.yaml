@@ -1,0 +1,5 @@
+---
+drobots:
+  Notinheriting:
+    passwordstore:
+      name: 'nonexisting/sample'

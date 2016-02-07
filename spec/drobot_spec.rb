@@ -8,6 +8,7 @@ require_relative 'fixtures/simple_app'
 require_relative 'fixtures/sample_robot'
 require_relative 'fixtures/drobots/firstsample'
 require_relative 'fixtures/drobots/secondsample'
+require_relative 'fixtures/drobots/notinheriting'
 
 describe "Drobot", :type => :app do
   let(:fixture_dir) { Drobot::BASEDIR.join("spec/fixtures") }
@@ -18,19 +19,18 @@ describe "Drobot", :type => :app do
       subject { Runner.new(config_file: File.join(fixture_dir, 'test_config.yaml')) }
 
       it "iterates over multiple drobots" do
-        drobots = subject.drobots
-        expect(drobots.count).to eq 2
-        expect(drobots.first).to be_a(Drobots::Firstsample)
-        expect(drobots.last).to be_a(Drobots::Secondsample)
+        expect(subject.drobots.count).to eq 2
+        expect(subject.drobots.first).to be_a(Drobots::Firstsample)
+        expect(subject.drobots.last).to be_a(Drobots::Secondsample)
       end
 
       it "runs Drobots" do
         subject.run
-        
         expect(subject.drobots.first.ran?).to be true
         expect(subject.drobots.last.ran?).to be true
       end
     end
+    
     context "with broken configurations" do
       it "gives a proper warning" do
         expect {
@@ -42,6 +42,12 @@ describe "Drobot", :type => :app do
         expect {
           Runner.new(config_file: File.join(fixture_dir, 'missing_config.yaml')).run
         }.to raise_exception(RuntimeError, /unknown Drobot NonExistingDrobot/)
+      end
+
+      it "detects Drobots not inheriting from Drobot" do
+        expect {
+          Runner.new(config_file: File.join(fixture_dir, 'notinheriting_config.yaml')).run
+        }.to raise_exception(RuntimeError, /Notinheriting doesn't inherit from Drobot/)
       end
     end
   end

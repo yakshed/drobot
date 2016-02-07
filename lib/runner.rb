@@ -28,6 +28,8 @@ class Runner
 
   def determine_drobot(name)
     drobot = Object.const_get("Drobots::#{name}")
+    raise "#{name} doesn't inherit from Drobot" unless drobot <= Drobot
+    drobot
   rescue NameError
     raise "unknown Drobot #{name}"
   end

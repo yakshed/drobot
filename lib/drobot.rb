@@ -1,7 +1,9 @@
 require 'open-uri'
-require 'capybara'
-require 'version'
-require 'drobots'
+require 'capybara/dsl'
+require 'capybara/poltergeist'
+require 'pathname'
+
+Capybara.default_driver = :poltergeist
 
 class Drobot
   include Capybara::DSL
@@ -16,7 +18,6 @@ class Drobot
   
   def download(url)
     open("#{@target}/#{title}.pdf", 'wb') do |file|
-      # puts "Downloading #{url}"
       file << open(url).read
     end
   end
@@ -38,3 +39,7 @@ class Drobot
     @credential_provider.password
   end
 end
+
+require 'runner'
+require 'version'
+require 'drobots'
