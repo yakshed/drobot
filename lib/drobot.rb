@@ -3,10 +3,20 @@ require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'pathname'
 
+
+
 require 'credentials/passwordstore_provider'
 require 'credentials/static_provider'
 
 Capybara.default_driver = :poltergeist
+Capybara.default_max_wait_time = 120
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {
+                                      :debug => false,
+                                      :js_errors => false,
+                                      :timeout => 200
+                                    })
+end
 
 class Drobot
   include Capybara::DSL
@@ -34,15 +44,11 @@ class Drobot
     Date.today.strftime("%Y-%m-")
   end
 
-  def username
-    @credential_provider.username
-  end
-
-  def password
-    @credential_provider.password
+  def credential(name)
+    @credential_provider.send(name)
   end
 end
 
+require 'drobots'
 require 'runner'
 require 'version'
-require 'drobots'
