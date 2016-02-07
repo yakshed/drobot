@@ -11,12 +11,11 @@ class Runner
     @config = YAML.load_file(@config_file)
 
     JSON::Validator.validate!(SCHEMA, @config, insert_defaults: true)
-    puts @config
   end
 
   def drobots
     @drobots ||= @config['drobots'].map do |name, config|
-      credential_provider = determine_provider(config['credentials']['provider']).new(config['credentials']['params'])
+      credential_provider = determine_provider(config['credentials']['type']).new(config['credentials'])
       determine_drobot(name).new(credential_provider)
     end
   end
