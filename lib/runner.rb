@@ -6,7 +6,7 @@ class Runner
   SCHEMA = YAML.load_file(Drobot::BASEDIR.join('lib/runner_config_schema.yaml'))
 
   def initialize(config_file: nil)
-    default_file = File.join(Dir.home, '.drobots.yaml')
+    default_file = File.join(Dir.home, '.drobot.yaml')
     @config_file = config_file || default_file
     @config = YAML.load_file(@config_file)
 
