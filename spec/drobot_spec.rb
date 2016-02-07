@@ -29,7 +29,7 @@ describe "Drobot", :type => :app do
         expect(subject.drobots.last.ran?).to be true
       end
     end
-    
+
     context "with broken configurations" do
       it "gives a proper warning" do
         expect {
@@ -55,26 +55,49 @@ describe "Drobot", :type => :app do
         }.to raise_exception(RuntimeError, /Notinheriting doesn't inherit from Drobot/)
       end
     end
-    
   end
 
-  describe "automated download", :type => :feature do
+  describe "login and download", :type => :feature do
 
     let(:runner) { Runner.new }
-    let(:credential_provider) { Credentials::PasswordstoreProvider.new({'pass_command' => "#{fixture_dir}/mock_pass",  'pass_name' => 'sample/app'} ) }
+    let(:credential_provider) { Credentials::PasswordstoreProvider.new({'command' => "#{fixture_dir}/mock_pass",  'name' => 'sample/app'} ) }
     subject { Drobots::Sample.new(credential_provider, output_dir) }
 
     before do
       Capybara.app = SimpleApp.new
       FileUtils.mkdir_p(output_dir)
     end
-    
+
     it "sorts files into the correct folder." do
       files = proc { Dir["#{output_dir}/**"] }
       FileUtils.rm(files.call)
-      
+
       expect(files.call).to eq []
-      
+
+      subject.run
+
+      filename = Date.today.strftime("%Y-%m-sample.pdf")
+      expect(files.call).to eq [ File.join(output_dir, filename) ]
+    end
+  end
+
+  describe "login and download with static provider", :type => :bullshit do
+
+    let(:runner) { Runner.new }
+    let(:credential_provider) { Credentials::StaticProvider.new({ 'username' => "my_user",  'password' => 'soopa_secret'} ) }
+    subject { Drobots::Sample.new(credential_provider, output_dir) }
+
+    before do
+      Capybara.app = SimpleApp.new
+      FileUtils.mkdir_p(output_dir)
+    end
+
+    it "sorts files into the correct folder." do
+      files = proc { Dir["#{output_dir}/**"] }
+      FileUtils.rm(files.call)
+
+      expect(files.call).to eq []
+
       subject.run
 
       filename = Date.today.strftime("%Y-%m-sample.pdf")

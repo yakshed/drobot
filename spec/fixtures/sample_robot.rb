@@ -4,8 +4,8 @@ class Drobots::Sample < Drobot
     click_link 'login'
 
     within('#myform') do
-      fill_in 'username', :with => username
-      fill_in 'password', :with => password
+      fill_in 'username', :with => credential('username')
+      fill_in 'password', :with => credential('password')
       click_button 'Yo'
     end
     
