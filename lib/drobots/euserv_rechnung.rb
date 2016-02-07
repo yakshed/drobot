@@ -4,15 +4,12 @@ class Drobots::EuservRechnung < Drobot
   def run
     visit "https://support.euserv.de/"
 
-    within('form[name=step1_anmeldung]') do
-      fill_in 'email', :with => username
-      fill_in 'password', :with => password
-      click_button 'Login'
-    end
+    find('input[name=email]').set(username)
+    find('input[name=password]').set(password)
+    find('select[name=form_selected_language]').set('de')
 
-    page.save_screenshot('/tmp/screenshots/euserv.png')
-    l = find_link "Rechnung"
-    puts l[:href]
-    
+    click_button 'Login'
+    click_link 'Customer Account / Invoices'
+    first('form[name=billform]').find('input[name=pdfpic]').click
   end
 end
