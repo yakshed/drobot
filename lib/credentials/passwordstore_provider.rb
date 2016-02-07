@@ -3,8 +3,8 @@ module Credentials
     
     def initialize(opts)
       
-      @pass_command = opts['pass_command'] || '/usr/bin/pass'
-      @pass_name = opts['pass_name'] or raise ArgumentError.new("Missing pass_name for Provider")
+      @command = opts['command'] || '/usr/bin/pass'
+      @name = opts['name'] or raise ArgumentError.new("Missing name for Provider")
     end
     
     def username
@@ -23,7 +23,7 @@ module Credentials
     # Username: my_user
     def credentials
       return @credentials if @credentials
-      output = %x"#{@pass_command} #{@pass_name}".lines
+      output = %x"#{@command} #{@name}".lines
 
       password = output.shift
       username = output.find { |line| line.start_with? 'Username:' }.split(":").pop.strip
